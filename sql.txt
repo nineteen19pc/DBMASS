@@ -459,6 +459,105 @@ select ename , sal , deptno from emp order by 1; -- orders by column 3
 
 
 
+CREATING TABLES
+-----------------------------------
+
+Create Table Cust_MasterO
+( CustID Int,
+CustName Varchar(20),
+CustCity Varchar(10)
+);
+
+-- Insering records in the table
+
+Insert into Cust_MasterO Values(1,'John', 'Pune');
+Insert into Cust_MasterO (CustId, CustName, CustCity) Values (2, 'Martin', 'Mumbai');
+Insert into Cust_MasterO(CustName) Values ('Roger'); --if the remaining 
+colums are not primary or uniques keys
+
+Creating table wioth Data Integrity Rules (constraints)
+a) Column level
+b) Table level
+
+Create Table Cust_Master
+( CustID Int Primary Key,
+CustName Varchar(20) Not Null,
+CustCity Varchar(10) default 'Pune',
+Deposit Int Check(Deposit >= 500),
+Credit_Card_No Int Unique
+);
+
+Create Table Cust_Transactions
+(CustID Int References Cust_Master,
+Amount Int
+);
+
+Insert into Cust_Transaction Values(1,200);
+-- although my sql accepts other databases throw error
+
+Insert into Cust_Master Values (1,'john',default,400,null); -- 
+Insert into Cust_Master Values (1,'john',default,600,null);
+Insert into Cust_Master Values (1,'Martin',default,600,null);
+
+Table Level Constraints::
+------------------------------------
+Create table t1
+(a int,
+b int not null,
+c int,
+d int,
+Primary Key(a),
+Unique (c),
+Check (d >400)
+);
+
+Need of Table Level Constraints
+1) When we are comparing columns of the tables 
+2) While creating composite keys
+
+create table t1
+(a int,
+b int,
+c int check(c>b)
+);  -- Error
+
+create table t1
+(a int,
+b int,
+c int, check(c>b)
+);
+
+2) Eg. while creating composite keys:
+
+create table t2
+(a int,
+b int,
+c int,
+Primary Key(a,b)
+);
+
+3) Foreign key at table level:
+Create table Cust_Transaction_Intl
+( CustID Int,
+Amount Int,
+Foreign Key(CustID) References Cust_Master(CustID)
+);
 
 
+Deleting records
+-----------------------------------
+Delete
+From Emp
+Where Empno=7698;
 
+select * from emp;
+
+Update Emp
+Set sal = 7000 
+-- This will update all the salaries of everyone.
+
+Update Emp
+Set sal = 7000
+Where Ename="KING";
+
+drop table emp;
