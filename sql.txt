@@ -561,3 +561,13 @@ Set sal = 7000
 Where Ename="KING";
 
 drop table emp;
+
+
+select continent,
+	country,
+	pname,
+	max(sales)
+From Products2
+Group by continent,
+	country,
+	pname;
