@@ -562,12 +562,720 @@ Where Ename="KING";
 
 drop table emp;
 
+select 6+7; -- prints sum
 
-select continent,
-	country,
-	pname,
-	max(sales)
-From Products2
-Group by continent,
-	country,
-	pname;
+select 6+7 from emp; -- 13 is printed multiple times
+
+select 6+7 from emp where deptno =20;
+
+types of sql functions as per their criterion
+1) built in either ANSI or  Prpprietory
+2 ) user defined (Programatically in that database)
+
+Types of Built in funtctions i
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select concat('Salary of ', ename, ' is ', sal) as "Salary Details" from emp;
+select concat('Job of ', ename, ' is ', job) as "Job Details" from emp;
+select concat('abc', 'hshd');
+
+It returns the first nit null value from the parameter list.
+select ename, sal, sal +coalesce(comm,0) as "total" from emp;
+
+Coalesce is ANSI SQL functions .
+It returns the first nit null value from the parameter list.
+select ename, sal, sal +coalesce(comm,0) as "total" from emp;
+
+Condition 
+
+
+
+
+
+
+
+select ename, deptno, case deptno 
+When 10 Then 'A'
+When 20 Then 'B'
+Else 'C'
+End as "Department Code"
+from emp;
+
+
+select ename, deptno, case deptno 
+When 10 Then 'A'
+When 20 Then 'B'
+-- Else
+-- 'C'
+End as "Department Code"
+from emp;
+
+Select Ename,sal,case
+when sal >= 4000 then 'A+'
+when sal >= 2990 then 'A'
+when sal >= 2400 then 'B+'
+when sal >= 1800 then 'B'
+Else
+'C'
+End as "salary Class"
+from emp;
+
+select sum(sal) from emp;
+
+
+mysql> select sum(ename) from emp;
++------------+
+| sum(ename) |
++------------+
+|          0 |
++------------+
+
+mysql> select sum(hiredate) from emp;
++---------------+
+| sum(hiredate) |
++---------------+
+|     277380658 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select max(hiredate) from emp;
++---------------+
+| max(hiredate) |
++---------------+
+| 1983-12-01    |
++---------------+
+1 row in set (0.02 sec)
+
+mysql> select min(hiredate) from emp;
++---------------+
+| min(hiredate) |
++---------------+
+| 1980-12-17    |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select max(ename) from emp;
++------------+
+| max(ename) |
++------------+
+| ward       |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select min(ename) from emp;
++------------+
+| min(ename) |
++------------+
+| ADAMS      |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(comm) from emp;
++-------------+
+| count(comm) |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select deptno, Sum(sal)as "total" from emp group by deptno;
++--------+-------+
+| deptno | total |
++--------+-------+
+|     20 | 10875 |
+|     30 |  9400 |
+|     10 |  8750 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select job from emp group by job;
++-----------+
+| job       |
++-----------+
+| CLERK     |
+| SALESMAN  |
+| MANAGER   |
+| ANALYST   |
+| PRESIDENT |
++-----------+
+5 rows in set (0.00 sec)
+
+mysql> select job, deptno, sum(sal) as "Total" from emp group by job, deptno;
++-----------+--------+-------+
+| job       | deptno | Total |
++-----------+--------+-------+
+| CLERK     |     20 |  1900 |
+| SALESMAN  |     30 |  5600 |
+| MANAGER   |     20 |  2975 |
+| MANAGER   |     30 |  2850 |
+| MANAGER   |     10 |  2450 |
+| ANALYST   |     20 |  6000 |
+| PRESIDENT |     10 |  5000 |
+| CLERK     |     30 |   950 |
+| CLERK     |     10 |  1300 |
++-----------+--------+-------+
+9 rows in set (0.00 sec)
+
+
+mysql> select comm
+    -> from emp
+    -> group by comm;
++------+
+| comm |
++------+
+| NULL |
+|  300 |
+|  500 |
+| 1400 |
+|    0 |
++------+
+5 rows in set (0.00 sec)
+
+
+mysql> select count(*) fromagr1;
++----------+
+| fromagr1 |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+
+mysql> select sum(a), avg(a),max(a), min(a), count(A)
+    -> from agr1;
++--------+--------+--------+--------+----------+
+| sum(a) | avg(a) | max(a) | min(a) | count(A) |
++--------+--------+--------+--------+----------+
+|   NULL |   NULL |   NULL |   NULL |        0 |
++--------+--------+--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(sal)
+    -> from emp
+    -> group by deptno;
++-----------+
+| avg(sal)  |
++-----------+
+| 2175.0000 |
+| 1566.6667 |
+| 2916.6667 |
++-----------+
+3 rows in set (0.00 sec)\
+
+mysql> select max (avg(sal))
+    -> from emp
+    -> group by deptno;
+ERROR 1630 (42000): FUNCTION mydb0.max does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+
+
+mysql> select job, max(sal)
+    -> from emp
+    -> where job <> 'president'
+    -> group by job
+    -> having max(sal)>2000;
++---------+----------+
+| job     | max(sal) |
++---------+----------+
+| MANAGER |     2975 |
+| ANALYST |     3000 |
++---------+----------+
+2 rows in set (0.00 sec)
+
+select ename, dname
+from emp,dept
+where emp.deptmno=dept.deptno;
+
+
+select ename, dname
+from emp inner join dept
+on emp.deptmno=dept.deptno;
+
+
+select ename, dname
+from emp inner join dept; -- gives the cross product 56 rows
+
+select ename, dname, deptno
+from emp join dept
+On emp.deptno=dept.deptno; -- error
+
+
+select ename, dname, emp.deptno
+from emp join dept
+On emp.deptno=dept.deptno;
+
+The best practice-------------------------Table Aliases
+
+select emp.ename, dept.dname, emp.deptno
+from emp join dept
+On emp.deptno=dept.deptno;
+
+
+select e.ename, d.dname, e.deptno
+from emp e join dept d
+On e.deptno=d.deptno;
+
+Join Condition and Filter Condition together
+
+select ename, dname, sal
+from emp join dept
+On emp.deptno=dept.deptno -- On and In For joins acts like And here.
+where sal>2000;
+
+
+select ename, dname, sal
+from emp join dept
+On emp.deptno=dept.deptno Or sal>2000;-- partial cross join
+
+From emp e join salgrade sg
+On e.sal between sg.losal and sg.hisal;
+
+Examples of Non equi joins
+
+
+select e.ename, e.sal
+from emp join dept
+On emp.deptno=dept.deptno Or sal>2000;
+
+select * from e;
+select * from d;
+select * from p;
+
+More than 2 tables joins
+
+select ename, dname, pname
+from e join d
+on e.deptno = d.deptno
+join p
+on d.pcode=p.code;
+
+
+
+
+
+
+Outer joins:
+Outer join is the extention of inner join.
+There are 3 types of outer joins:
+
+Left Oj
+right OJ
+full OJ
+
+Left Oj means matching records from tboth the tables all records of left table
+
+select ename , dname
+from emp1 left outer join dept1
+on emp1.deptno=dept1.deptno;
+
+
+select ename , dname
+from dept1 right outer join emp1
+on emp1.deptno=dept1.deptno;
+
+Full OJ= inner + Remaining of left table + remaining of Right table
+
+select ename , dname
+from emp1 Full outer join dept1
+on emp1.deptno=dept1.deptno; -- Not supported in my sql
+
+left or Right jopins can also be used to show " only non matching 
+
+
+select ename as  "ENames Not in dept 1"
+from emp1 left outer join dept1
+on emp1.deptno=dept1.deptno
+where dept1.deptno is null;
+
+Select e.ename as "sub ordinate", IfNull(e.ename, "No Manager") as "Manager"
+from emp e left join emp m
+on e.mgr = m.empno;
+
+
+Sub Queries
+There aere2 types of sSQ
+1. Non Corelated
+
+2. Corelated
+
+non cprelatd
+dislay the records of employee who earn sal > smiths sal;
+
+select * 
+from emp 
+where sal> (select sal 
+		from emp 
+		where ename = 'smith');
+---------------------if more than 1 smith is there then problem------------therefpre use primamary key only
+if no asmith is there ten we get empty set---------------------
+
+First Hint to use SQ--- When there is a derrived ot indirect value in the where clause or having 
+clause for comparison then that we can get that derived ir indirect calue using the dub query 
+tchnique------------
+
+
+Eg 2..-----------------------------------
+Display name and slaary of the highrst earner.
+
+select ename ,sal 
+from emp 
+where sal=(select max(sal ) 
+		from emp);
+-----------------here it is better because it return only o1 answer--------------------
+
+Second Hint------------------
+Whenever we want to compare aggregate value directly without 
+grouping in the where clause use sub query
+Tyes of mnon corelated sub 	ueries
+1. Single row sub Q
+2.Multirow SQ
+3. Along with exiast and non exist operator 
+4. Nested SQ
+
+
+1. Single row sub Q
+
+When the child query return 1 value to its parent then it is cateforised as single row SQ.
+Look eg 2 is better than 1.
+
+2.Multirow SQ
+When the child query return more than 1 value to its parent then it is cateforised as Multirow SQ
+
+ select * 
+from emp 
+where sal > ( select sal 
+		from emp 
+		where deptno=20); -- Compile time error multiple rows returned by subquery
+
+We can use ANY and ALL and IN for multi row queries: ---here like----------------------------------
+
+select * 
+from emp 
+where sal > ANY( select sal 
+		from emp 
+		where deptno=20);--<ANY= ( less than the max from the list)
+				> ANY = ( greater than the minimum because it is or operation..
+			if > any of it .....it is considered
+
+select * 
+from emp 
+where sal > ALL( select sal 
+		from emp 
+		where deptno=20);----- > ALL( must be greaotr than all
+					< All ( must be less than all of them)
+
+Display records from emp1 who have deptno matching as per dept1 table.
+
+Instead of joins we can use SQ techniques---------------------
+
+
+select * 
+from emp1
+where deptno in (select deptno
+		from dept1);
+
+Display records from emp1 who fo not have deptno matching as per dept1 table.
+
+select * 
+from emp1
+where deptno not in (select deptno
+			from dept1);
+
+-------------------If SQ gets a NULL all the codotion getsa false WE get empty set
+therefore use is not null to be sager side--
+select * 
+from emp1
+where deptno not in (select deptno
+		from dept1 
+		where deptno is not null);
+----------------------
+
+using non Corelated SQ in DML Statements.
+Means the parent qiery need not to be only select qiery.
+The parent query can be insett or update or delete.
+
+create table empc1 
+as
+select * 
+from emp;
+
+
+create table empc2
+as
+select * 
+from emp;
+
+
+create table empc3
+as
+select * 
+from emp;
+
+
+create table empc4
+as
+select * 
+from emp;
+
+Delete records Haaving highest salary------------Child query can alwqays be se;ect---parent could be any
+
+delete from empc1 
+where sal=(select max(sal) 
+		from empc1);----- MYSQL exception, in all other SQL databases it works smoothly
+delete from empc1 
+where sal=(select max(sal) 
+		from emp);--- now works fine in mySQl as the child table is different
+
+
+Change the salary of the lowest earner , The raise swhould ne 50%.
+
+update empc2 
+set sal = sal + (sal*0.5)
+where sal=(select min(sal 
+		from empc2);--MYSQL exception, in all other SQL databases it works smoothly
+
+update empc2 
+set sal = (sal + (sal*0.5))
+where sal=(select min(sal) 
+		from emp);---now works fine in mySQl as the child table is different
+
+3) Along with Exist and Not exist operators:
+1. Exist
+If the exists operator gets false from SQ then the parent query will not get executed
+If the exists operator gets true from SQ then the parent query will get executed
+
+It is used to decide eithr to execute parent query or NOT.-----------
+
+
+select * 
+from emp
+where exists ( select * 
+		from dept
+		where deptno=98);-- as exist only reads 
+-----------------true or false-- if false then parent does not execute..else execute
+
+
+select * 
+from emp
+where exists ( select * 
+		from dept
+		where deptno>20);--- since true ---parent query gets executed
+
+The SQ is NOT returning any actual to the partent for comparision
+But the SQ only returns either True Or False to its {arent via Exists Operator.
+
+So the colums list of chiuld query is of Sero significance
+
+select * 
+from emp
+where exists ( select 'CDAC' 
+		from dept
+		where deptno=20);
+
+select * 
+from emp
+where exists ( select NULL 
+		from dept
+		where deptno=20);---This is the fastest because no value
+		 is being returned and also no value is asked to return
+
+select * 
+from emp
+where exists (select dayname(curdate())= 'SUNDAY'); -----true T.F. all rows returned( not correct syntax)
+
+Records are shown if current day is SUNDAY else not shown-------
+select * 
+from emp
+where exists (select null 
+		from emp 
+		where dayname(curdate())= 'SUNDAY');---Records are shown if today is SUNDAY else not shown
+
+Records should not be shown if current day is SaturDAY
+select * 
+from emp
+where exists (select null
+		from emp 
+		where dayname(curdate())= 'SATURDAY');
+
+select * 
+from emp
+where exists (select dayname(curdate())= 'SATURDAY');
+	
+NOT EXIST-------------
+select * 
+from emp
+where not exists (select null
+		from emp 
+		where dayname(curdate())= 'SATURDAY');
+
+it executes when the child query is false-----
+
+
+3. NESTED SUBQUERIES-----------inside a SQ there will be another SQ
+Display records who have salary greatie than fords jobs highest salary
+
+select *
+From emp
+Where sal>(select max(sal)
+		from emp
+		where (job=(select job
+			from emp
+			where ename ='FORD'
+			))
+		);
+
+--------------------------------------------------------------------------------------------------------
+
+SET OPERATORS
+
+They will enable us to combine the rows given by 2 or more 
+select statements and finally ONE output is given
+
+1. UNION ALL:
+it wil combine the rows of 2 select statements and display all the records
+It will not eliminate duplicates
+It will not do ant sorting.
+
+select * 
+from India
+Union ALL 
+select * 
+From Australia;
+
+
+select pname 
+from India
+Union ALL 
+select pname 
+From Australia;
+
+
+2. UNION:
+it wil combine the rows of 2 select statements and display all the records
+It will eliminate duplicates
+It will sort ascending as per first column by default: --(but not in mysql)
+
+
+select pname 
+from India
+Union ALL 
+select pname 
+From Australia;
+
+Rules of successful execution of set operations:
+1) no of colums of each select stattement MUST BE SAME.
+
+
+select pname, qty
+from INDIA
+Union
+select pname
+From australia;--Error
+
+select pname, qty
+from INDIA
+Union
+select pname, null
+From australia;-- Work Around
+
+2) Positional columns should be compatible data type wise.
+
+select pname, qty
+from INDIA
+Union
+select Qty,pname
+From australia;---pname and qty are revesed -- Wrong output in MYSQL(type casting) .
+		Others all SQL databases will thorow erros
+
+3) Order by clause if present then should be present after the ;ast select statement
+
+
+select pname, qty
+from INDIA
+Order by pname
+Union
+select pname,qty
+From australia; ---- ERROR
+
+
+select pname, qty
+from INDIA
+Union
+select pname,qty
+From australia
+Order by pname;--- 
+------------------------------------------------------------------------
+3) INTERSECT: 
+It wil combine the rows of 2 select statements and display all the records
+**** It will consider only common rows form those 2 select statements
+It will eliminate duplicates
+It will sort ascending as per first column by default: --(but not in mysql)
+
+Display the different types of products sold in common in india and australia
+
+Select pname
+From INDIA
+Intersect
+Select pname
+From Australia;
+
+--------------------------------------------------------------------------
+4) EXCEPT.----MINUS(Oracle only)
+It wil combine the rows of 2 select statements and display all the records
+**** It will consider rows of first se;ect statement which are not in the second select statement
+It will eliminate duplicates
+It will sort ascending as per first column by default: --(but not in mysql)
+
+
+Display the different types id producrs sold in india but not in australia
+
+Select pname
+From INDIA
+Except
+Select pname
+From Australia;
+
+Changing the statements changes the output:-------------------------------
+
+Select pname
+From Australia
+Except
+Select pname
+From India;
+
+ select * 
+from mech 
+where marks >=70 
+Union all 
+select * 
+from comp 
+where marks >=70;
+
+------------------------ As per rule only the first alias is slected only
+Select pname as "A"
+From INDIA
+Union
+Select pname as "B"
+From Australia;
+
+-------------------here also the second alias is ignored ----Table is shown only with pname.
+Select pname 
+From INDIA
+Union
+Select pname as "B"
+From Australia;
+
+There is no limit on how many select statements we have to combine with the SET OPERATORs
+UNION INTersection etc...
